@@ -1,0 +1,71 @@
+a = int(input())
+for i in range(a):
+  b = input()
+  z = 1
+  obs = 1000000000-------->
+  for j in range(60):
+    x = str(z)-------->power of 2
+    k = 0
+    for m in range(len(b)):
+      if b[m] == x[k]:
+        k += 1
+      if k == len(x):
+        break
+    obs = min(obs, len(b) - k + len(x) - k)
+    z *= 2
+  print(obs)
+
+Explaination
+In the example with input "1052", the value of x does not become "0" in the first iteration. Instead, x is calculated based on the value of z, which is initially 1.
+
+So, in the first iteration:
+
+x = "1" (since z = 1)
+Now, let's go through the innermost loop again:
+
+Compare b[0] (which is '1') with x[0] (which is '1'). Match! Increment k to 1.
+Compare b[1] (which is '0') with x[1] (out of bounds, so no match).
+Compare b[2] (which is '5') with x[1] (out of bounds, so no match).
+Compare b[3] (which is '2') with x[1] (out of bounds, so no match).
+So, x[1] is not "0" but rather out of bounds, and there are no matches in the string "1052" for the current value of x.
+
+The corrected calculation for obs would be min(1000000000, 4 - 1 + len("1") - 1), which simplifies to min(1000000000, 3), so obs remains 3.
+
+I apologize for the oversight in my previous response. Thank you for bringing it to my attention.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Questions I asked
+is there any point of obs in the code?
+
+ChatGPT
+Yes, the variable obs (short for "observations") plays a crucial role in the code. It is used to keep track of the minimum number of changes required to transform the input string b into a sequence of powers of 2 (e.g., "1", "2", "4", "8", "16", ...).
+
+In the code, the obs variable is updated in each iteration of the inner loop as follows:
+
+python
+Copy code
+obs = min(obs, len(b) - k + len(x) - k)
+Let's break down how this works:
+
+len(b) - k: This calculates the number of characters remaining in the string b that have not been matched with the current value of x. In other words, it represents the number of characters that need to be changed to match the remaining part of the power of 2 sequence.
+
+len(x) - k: This calculates the number of characters in the current value of x that have not been matched with the string b. It represents the number of characters that need to be added to the end of the string b to match the power of 2 sequence.
+
+min(obs, ... ): This takes the minimum of the current value of obs and the calculated value from the previous two steps. It ensures that obs always holds the smallest number of changes needed among all iterations of the inner loop.
+
+In essence, obs serves as a running minimum that is updated in each iteration of the inner loop to keep track of the smallest number of changes required for the current value of x. At the end of all iterations, obs will contain the minimum number of changes needed to transform the string b into a sequence of powers of 2.
+
+So, obs is a critical part of the code's logic to find the optimal solution for the given problem.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q2)but obs is really big right so.... the other value be always be minimum right?
+You are correct in your observation. The initial value of obs is set to a very large value (1000000000), which is much larger than any reasonable number of changes that might be required to transform a string into a sequence of powers of 2. This ensures that the first calculated value of changes (len(b) - k + len(x) - k) will always be smaller than the initial value of obs.
+
+As the code iterates through different values of x (powers of 2), it keeps updating the value of obs with the minimum number of changes required. Since obs starts with a very large value and is updated with smaller values, it will eventually hold the smallest number of changes needed among all the iterations.
+
+In simpler terms, the purpose of using obs with a large initial value is to ensure that it gets updated only with values that are smaller, effectively finding the minimum number of changes needed to transform the input string into a sequence of powers of 2.
+
+So, while the initial value of obs is large, it is used to keep track of the minimum changes throughout the loop, and by the end, it will indeed hold the correct minimum value.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q3)obs1 = min(obs, len(b) - k + len(x) - k) in this line does it take min of each value present?
+Yes, you are correct. The line obs1 = min(obs, len(b) - k + len(x) - k) calculates the minimum of two values: the current value of obs and the value len(b) - k + len(x) - k.

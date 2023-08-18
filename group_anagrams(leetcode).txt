@@ -1,0 +1,41 @@
+Question
+Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+ 
+
+Example 1:
+
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+---------------------------------------------------------------------------------x------------------------------------------------
+Code:
+from collections import defaultdict
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        myMap=defaultdict(list)
+        result=[]
+        for s in strs:
+            sor=tuple(sorted(s))
+            myMap[sor].append(s)
+           
+        for x in myMap.values():
+            result.append(x)
+        return result
+----------------------------------------------------------------------------------x------------------------------------------------------   
+Explaination:
+for s in strs:
+    sor = tuple(sorted(s))
+    myMap[sor].append(s)
+
+This loop iterates through each string s in the input list strs. It sorts the characters of s and converts the sorted characters into a tuple sor. Then, it appends the original string s to the list corresponding to the key sor in the myMap dictionary. This effectively groups anagrams together based on their sorted character tuples.
+
+for x in myMap.values():
+    result.append(x)
+
+This loop iterates through the values of the myMap dictionary (which are lists of anagrams) and appends each of these lists to the result list. This creates a list of lists where each inner list contains a group of anagrams.
+---------------------------------------------------------------------------------------x-------------------------------------------------------
+Data Structure Used:
+Dictionary
+Hashmap(Can also be used to find the solution where we keep letters as it's keys)
